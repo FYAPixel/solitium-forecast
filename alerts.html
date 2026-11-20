@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solitium | Recent Earthquakes</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Leaflet Map CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- FontAwesome Icons -->
+    <script src="https://kit.fontawesome.com/97c890c218.js" crossorigin="anonymous"></script>
+</head>
+<body class="site-body">
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <h2 class="brand-title">SOLITIUM <span class="nav-subtitle">// RECENT SEISMICITY</span></h2>
+        </div>
+        
+        <button class="nav-toggle-btn" aria-label="Toggle navigation menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="alerts.html" class="nav-link active">Recent Earthquakes</a>
+            <a href="earthquakes.html" class="nav-link">History</a>
+            <a href="weather.html" class="nav-link">Weather Forecast</a>
+        </div>
+    </nav>
+
+    <!-- MAIN PAGE CONTAINER -->
+    <main class="page-container">
+        
+        <!-- PERSONAL REFERENCE LOCATION BAR -->
+        <div class="location-bar-container"></div>
+
+        <!-- PAGE HEADER HERO -->
+        <section class="hero-section" style="padding: 32px 28px;">
+            <h1 class="hero-title" style="font-size: 28px;">Recent Earthquakes Feed</h1>
+            <p class="hero-subtitle" style="margin-bottom: 0;">
+                Live BMKG M 5.0+ and Felt seismic events with personal distance &amp; estimated shaking.
+            </p>
+        </section>
+
+        <!-- STREAMLINED FILTER TOOLBAR -->
+        <section class="filter-card">
+            <div class="filter-grid" style="grid-template-columns: 2fr 1fr 1fr auto;">
+                <div>
+                    <label for="filter-search" style="font-size: 11px; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">SEARCH REGION</label>
+                    <input type="text" id="filter-search" class="filter-input" placeholder="e.g. Jawa, Maluku, Pacitan, Sumatra...">
+                </div>
+                <div>
+                    <label for="filter-mag" style="font-size: 11px; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">MIN MAGNITUDE</label>
+                    <select id="filter-mag" class="filter-select">
+                        <option value="0">All</option>
+                        <option value="4.0">M 4.0+</option>
+                        <option value="5.0" selected>M 5.0+</option>
+                        <option value="6.0">M 6.0+</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="filter-dist" style="font-size: 11px; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">DISTANCE</label>
+                    <select id="filter-dist" class="filter-select">
+                        <option value="all">Any Distance</option>
+                        <option value="250">&lt; 250 km</option>
+                        <option value="500">&lt; 500 km</option>
+                        <option value="1000">&lt; 1000 km</option>
+                    </select>
+                </div>
+                <div style="align-self: flex-end;">
+                    <button type="button" id="filter-reset" class="btn-reset" title="Reset search filters">
+                        <i class="fa-solid fa-rotate-left"></i> Reset
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SPLIT MAP & LIST VIEW -->
+        <section class="quake-split-layout">
+            
+            <!-- INTERACTIVE LEAFLET MAP PANE -->
+            <div class="map-wrapper" style="margin-top: 0; height: 560px;">
+                <div id="recent-quakes-map" style="width: 100%; height: 100%;"></div>
+            </div>
+
+            <!-- SCROLLABLE LIST OF QUAKES -->
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 4px;">
+                    <strong style="font-size: 13.5px; color: var(--text-main);">Earthquakes Feed</strong>
+                    <span id="recent-quake-count" style="font-size: 11px; font-family: monospace; color: var(--text-muted);">Loading...</span>
+                </div>
+                <div class="quake-list-pane" id="recent-quakes-list">
+                    <div style="padding: 30px; text-align: center; color: var(--text-muted);">
+                        <i class="fa-solid fa-spinner fa-spin"></i> Fetching BMKG feeds...
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- EARTHQUAKE DETAIL MODAL OVERLAY -->
+    <div class="modal-overlay" id="quake-modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-btn" id="quake-modal-close" aria-label="Close dialog">&times;</button>
+            <div id="quake-modal-body"></div>
+        </div>
+    </div>
+
+    <!-- SITE FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <span class="footer-brand">&copy; SOLITIUM</span>
+                <span class="footer-divider">|</span>
+                <p class="footer-author">
+                    Student project by <strong>FAYPixel</strong> 
+                    <span class="footer-divider">•</span> 
+                    <a href="https://idn.sch.id" target="_blank" rel="noopener" class="footer-link">IDN BS Solo</a>
+                </p>
+            </div>
+            <div class="footer-right">
+                <a href="#projects" class="footer-btn">
+                    <span>See my other projects</span>
+                    <i class="fa-solid fa-arrow-right icon-arrow"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/geo-engine.js"></script>
+    <script src="js/fault-lines.js"></script>
+    <script src="js/bmkg-service.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

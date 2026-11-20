@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solitium | Weather Forecast & Commuter Advisory</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- FontAwesome Icons -->
+    <script src="https://kit.fontawesome.com/97c890c218.js" crossorigin="anonymous"></script>
+</head>
+<body class="site-body">
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <h2 class="brand-title">SOLITIUM <span class="nav-subtitle">// WEATHER FORECAST</span></h2>
+        </div>
+        
+        <button class="nav-toggle-btn" aria-label="Toggle navigation menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="alerts.html" class="nav-link">Recent Earthquakes</a>
+            <a href="earthquakes.html" class="nav-link">History</a>
+            <a href="weather.html" class="nav-link active">Weather Forecast</a>
+        </div>
+    </nav>
+
+    <!-- MAIN PAGE CONTAINER -->
+    <main class="page-container">
+        
+        <!-- PERSONAL REFERENCE LOCATION BAR -->
+        <div class="location-bar-container"></div>
+
+        <!-- HERO SECTION -->
+        <section class="hero-section" style="padding: 36px 32px;">
+            <h1 class="hero-title" style="font-size: 32px;">Regional Meteorological Intelligence</h1>
+            <p class="hero-subtitle" style="margin-bottom: 0;">
+                BMKG regional forecast feeds, 3-hour interval progression, and automated commuter rain & heat hazard advisories.
+            </p>
+        </section>
+
+        <!-- CITY / REGENCY SELECTOR CARD -->
+        <section class="filter-card" style="padding: 16px 24px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-city" style="color: var(--accent-orange); font-size: 16px;"></i>
+                    <span style="font-size: 13px; font-weight: 700; color: var(--text-main);">TARGET METEOROLOGICAL STATION:</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <select id="weather-city-select" class="filter-select" style="min-width: 240px;">
+                        <option value="solo" selected>Surakarta (Solo) - Jawa Tengah</option>
+                        <option value="madiun">Madiun - Jawa Timur</option>
+                        <option value="jogja">Yogyakarta - D.I. Yogyakarta</option>
+                        <option value="semarang">Semarang - Jawa Tengah</option>
+                        <option value="surabaya">Surabaya - Jawa Timur</option>
+                        <option value="bandung">Bandung - Jawa Barat</option>
+                        <option value="jakarta">Jakarta - DKI Jakarta</option>
+                        <option value="denpasar">Denpasar - Bali</option>
+                        <option value="medan">Medan - Sumatera Utara</option>
+                        <option value="makassar">Makassar - Sulawesi Selatan</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- CURRENT WEATHER HERO CONTAINER -->
+        <section id="weather-hero-container">
+            <div style="padding: 40px; text-align: center; color: var(--text-muted); background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 8px;">
+                <i class="fa-solid fa-spinner fa-spin"></i> Loading weather telemetry...
+            </div>
+        </section>
+
+        <!-- COMMUTER & OUTDOOR ADVISORY CARD -->
+        <section id="weather-advisory-container"></section>
+
+        <!-- HOURLY 3-HOUR PROGRESSION -->
+        <section id="weather-hourly-container"></section>
+
+        <!-- 3-DAY OUTLOOK -->
+        <section id="weather-daily-container"></section>
+
+    </main>
+
+    <!-- SITE FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <span class="footer-brand">&copy; SOLITIUM</span>
+                <span class="footer-divider">|</span>
+                <p class="footer-author">
+                    Student project by <strong>FAYPixel</strong> 
+                    <span class="footer-divider">•</span> 
+                    <a href="https://idn.sch.id" target="_blank" rel="noopener" class="footer-link">IDN BS Solo</a>
+                </p>
+            </div>
+            <div class="footer-right">
+                <a href="#projects" class="footer-btn">
+                    <span>See my other projects</span>
+                    <i class="fa-solid fa-arrow-right icon-arrow"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/geo-engine.js"></script>
+    <script src="js/bmkg-service.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

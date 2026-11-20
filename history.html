@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solitium | Earthquake History & Aftershock Log</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- FontAwesome Icons -->
+    <script src="https://kit.fontawesome.com/97c890c218.js" crossorigin="anonymous"></script>
+</head>
+<body class="site-body">
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <h2 class="brand-title">SOLITIUM <span class="nav-subtitle">// SEISMIC ARCHIVES</span></h2>
+        </div>
+        
+        <button class="nav-toggle-btn" aria-label="Toggle navigation menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="alerts.html" class="nav-link">Recent Earthquakes</a>
+            <a href="earthquakes.html" class="nav-link active">History</a>
+            <a href="weather.html" class="nav-link">Weather Forecast</a>
+        </div>
+    </nav>
+
+    <!-- MAIN PAGE CONTAINER -->
+    <main class="page-container">
+        
+        <!-- PERSONAL REFERENCE LOCATION BAR -->
+        <div class="location-bar-container"></div>
+
+        <!-- HERO SECTION -->
+        <section class="hero-section" style="padding: 32px 28px;">
+            <h1 class="hero-title" style="font-size: 28px;">Seismic History &amp; Aftershocks</h1>
+            <p class="hero-subtitle" style="margin-bottom: 0;">
+                Persistent seismic sequence log with automatic aftershock clustering and JSON export.
+            </p>
+        </section>
+
+        <!-- 4-CARD SUMMARY TELEMETRY METRICS -->
+        <section class="telemetry-grid">
+            <div class="telemetry-card">
+                <span class="telemetry-label">30-DAY MAX MAGNITUDE</span>
+                <div class="telemetry-val accent" id="hist-max-mag">--</div>
+                <span class="telemetry-sub">Highest seismic energy</span>
+            </div>
+            <div class="telemetry-card">
+                <span class="telemetry-label">RECORDED EVENTS</span>
+                <div class="telemetry-val" id="hist-total-events">--</div>
+                <span class="telemetry-sub">Cumulative sequence count</span>
+            </div>
+            <div class="telemetry-card">
+                <span class="telemetry-label">CLOSEST EVENT TO YOU</span>
+                <div class="telemetry-val" id="hist-closest-dist">--</div>
+                <span class="telemetry-sub" id="hist-closest-sub">Epicentral distance</span>
+            </div>
+            <div class="telemetry-card">
+                <span class="telemetry-label">AFTERSHOCK SEQUENCES</span>
+                <div class="telemetry-val accent" id="hist-cluster-count">--</div>
+                <span class="telemetry-sub">&lt; 50 km &amp; &lt; 48h clusters</span>
+            </div>
+        </section>
+
+        <!-- AFTERSHOCK CLUSTERING SECTION -->
+        <section class="cluster-section-card">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+                <h2 class="card-title" style="margin: 0; font-size: 16px;">
+                    <i class="fa-solid fa-layer-group" style="color: var(--accent-orange); font-size: 15px;"></i>
+                    Aftershock Clusters
+                </h2>
+                <span style="font-size: 11px; font-family: monospace; color: var(--text-muted); background: var(--bg-main); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-color);">
+                    &le; 50 KM &bull; &le; 48 HOURS &bull; M &ge; 5.0
+                </span>
+            </div>
+            <div id="cluster-list-container" style="margin-top: 10px;">
+                <div style="padding: 8px 0; color: var(--text-muted); font-size: 13px;">Analyzing sequences...</div>
+            </div>
+        </section>
+
+        <!-- ACTION BAR WITH ONLY JSON EXPORT -->
+        <section class="action-bar-row">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <strong style="font-size: 13.5px; color: var(--text-main);">Seismic Sequence Log</strong>
+            </div>
+            <div class="export-group">
+                <button type="button" class="btn-secondary" id="btn-export-json" title="Download seismic records as JSON">
+                    <i class="fa-solid fa-file-code" style="color: #2563EB;"></i>
+                    <span>Export JSON</span>
+                </button>
+                <button type="button" class="btn-secondary" id="btn-reset-history" title="Reload seed records">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                    <span>Reset Data</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- HISTORICAL SEISMIC TABLE -->
+        <section class="table-wrapper">
+            <table class="solitium-table">
+                <thead>
+                    <tr>
+                        <th>Date &amp; Time (WIB)</th>
+                        <th>Magnitude</th>
+                        <th>Depth</th>
+                        <th>Epicenter Region</th>
+                        <th>Distance to You</th>
+                        <th>Est. MMI</th>
+                        <th>Tsunami Alert</th>
+                    </tr>
+                </thead>
+                <tbody id="history-table-body">
+                    <tr>
+                        <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">
+                            <i class="fa-solid fa-spinner fa-spin"></i> Loading sequence archive...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+
+    <!-- SITE FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <span class="footer-brand">&copy; SOLITIUM</span>
+                <span class="footer-divider">|</span>
+                <p class="footer-author">
+                    Student project by <strong>FAYPixel</strong> 
+                    <span class="footer-divider">•</span> 
+                    <a href="https://idn.sch.id" target="_blank" rel="noopener" class="footer-link">IDN BS Solo</a>
+                </p>
+            </div>
+            <div class="footer-right">
+                <a href="#projects" class="footer-btn">
+                    <span>See my other projects</span>
+                    <i class="fa-solid fa-arrow-right icon-arrow"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/geo-engine.js"></script>
+    <script src="js/fault-lines.js"></script>
+    <script src="js/bmkg-service.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solitium | Control Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Leaflet Map CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- FontAwesome Icons -->
+    <script src="https://kit.fontawesome.com/97c890c218.js" crossorigin="anonymous"></script>
+</head>
+<body class="site-body">
+    
+    <!-- DASHBOARD NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <h2 class="brand-title">SOLITIUM <span class="nav-subtitle">// DASHBOARD</span></h2>
+        </div>
+        
+        <button class="nav-toggle-btn" aria-label="Toggle navigation menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="dashboard.html" class="nav-link active">Dashboard</a>
+            <a href="alerts.html" class="nav-link">Recent Earthquakes</a>
+            <a href="earthquakes.html" class="nav-link">History</a>
+            <a href="weather.html" class="nav-link">Weather Forecast</a>
+        </div>
+    </nav>
+
+    <!-- MAIN DASHBOARD -->
+    <main class="page-container">
+        
+        <!-- PERSONAL REFERENCE LOCATION BAR -->
+        <div class="location-bar-container"></div>
+
+        <!-- WELCOME SECTION -->
+        <section class="dashboard-grid">
+            <article class="info-card welcome-card">
+                <h2 class="card-title">System Overview</h2>
+                <p class="welcome-text">Personal Seismic Impact & Meteorological Intelligence</p>
+                <p class="card-text">
+                    Solitium measures real-time proximity, compass bearing, estimated Modified Mercalli Intensity (MMI), and seismic wave arrival times relative to your chosen reference location.
+                </p>
+            </article>
+
+            <!-- QUICK ACTION SHORTCUTS -->
+            <div class="action-grid">
+                <a href="alerts.html" class="action-card">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <div>
+                        <strong>Recent Earthquakes</strong>
+                        <div style="font-size: 11.5px; color: var(--text-muted); font-weight: normal;">M 5.0+ and felt seismic feeds</div>
+                    </div>
+                </a>
+                <a href="earthquakes.html" class="action-card">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <div>
+                        <strong>Earthquake History</strong>
+                        <div style="font-size: 11.5px; color: var(--text-muted); font-weight: normal;">Aftershock logs & JSON telemetry</div>
+                    </div>
+                </a>
+                <a href="weather.html" class="action-card">
+                    <i class="fa-solid fa-cloud-sun"></i>
+                    <div>
+                        <strong>Weather Forecast</strong>
+                        <div style="font-size: 11.5px; color: var(--text-muted); font-weight: normal;">BMKG regional synoptic & commuter alerts</div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- LIVE ALERT & SEISMIC IMPACT SECTION -->
+        <section class="alert-section">
+            <div class="live-alert-card">
+                <div class="alert-status-indicator">
+                    <span class="pulse-dot"></span>
+                    <span class="status-text" id="feed-status">SYNCHRONIZING BMKG FEED...</span>
+                </div>
+
+                <!-- SEISMIC DATA CONTAINER -->
+                <div class="quake-details" id="quake-details">
+                    <div class="quake-meta-grid">
+                        <div class="meta-item">
+                            <span class="meta-label">MAGNITUDE</span>
+                            <span class="meta-value accent-text" id="quake-mag">--</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">DEPTH</span>
+                            <span class="meta-value accent-text" id="quake-depth">--</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">TIMESTAMP</span>
+                            <span class="meta-value accent-text" id="quake-time">--</span>
+                        </div>
+                    </div>
+
+                    <p class="alert-message" id="quake-region" style="font-size: 15px; font-weight: 700; margin-bottom: 4px;">Loading location details . . .</p>
+                    
+                    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                        <span class="proximity-badge" id="quake-proximity">
+                            <i class="fa-solid fa-location-arrow"></i> Calculating distance...
+                        </span>
+                        <span class="tsunami-badge" id="quake-potential" style="margin-top: 6px;">--</span>
+                    </div>
+
+                    <!-- Felt Intensity (MMI) Badge -->
+                    <div id="quake-mmi-container"></div>
+
+                    <!-- Theoretical Seismic Wave Arrival Widget -->
+                    <div id="quake-wave-arrivals"></div>
+                </div>
+
+                <!-- LEAFLET MAP WRAPPER WITH TOOLBAR -->
+                <div class="map-wrapper">
+                    <div class="map-control-bar">
+                        <button type="button" class="map-btn-toggle active" id="btn-toggle-faults" title="Toggle Indonesian Fault Lines & Megathrusts">
+                            <i class="fa-solid fa-mountain"></i>
+                            <span>Fault Lines</span>
+                        </button>
+                        <button type="button" class="map-btn-toggle" id="btn-reset-map" title="Reset View to Indonesia / Personal Location">
+                            <i class="fa-solid fa-compress"></i>
+                            <span>Reset View</span>
+                        </button>
+                    </div>
+
+                    <div id="quake-map" style="height: 380px; width: 100%;"></div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- SITE FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            
+            <div class="footer-left">
+                <span class="footer-brand">&copy; SOLITIUM</span>
+                <span class="footer-divider">|</span>
+                <p class="footer-author">
+                    Student project by <strong>FAYPixel</strong> 
+                    <span class="footer-divider">•</span> 
+                    <a href="https://idn.sch.id" target="_blank" rel="noopener" class="footer-link">IDN BS Solo</a>
+                </p>
+            </div>
+
+            <div class="footer-right">
+                <a href="#projects" class="footer-btn">
+                    <span>See my other projects</span>
+                    <i class="fa-solid fa-arrow-right icon-arrow"></i>
+                </a>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/geo-engine.js"></script>
+    <script src="js/fault-lines.js"></script>
+    <script src="js/bmkg-service.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

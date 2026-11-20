@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1
+    <title>Solitium | Personal Seismic Impact & Weather Intelligence</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- FontAwesome Icons -->
+    <script src="https://kit.fontawesome.com/97c890c218.js" crossorigin="anonymous"></script>
+</head>
+<body class="site-body">
+
+    <!-- MAIN NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <h2 class="brand-title">SOLITIUM</h2>
+        </div>
+
+        <button class="nav-toggle-btn" aria-label="Toggle navigation menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        
+        <div class="nav-links">
+            <a href="index.html" class="nav-link active">Home</a>
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="alerts.html" class="nav-link">Recent Earthquakes</a>
+            <a href="earthquakes.html" class="nav-link">History</a>
+            <a href="weather.html" class="nav-link">Weather Forecast</a>
+        </div> 
+    </nav>
+
+    <!-- MAIN PAGE CONTAINER -->
+    <main class="page-container">
+        
+        <!-- PERSONAL REFERENCE LOCATION BAR -->
+        <div class="location-bar-container"></div>
+
+        <!-- HERO SECTION -->
+        <section class="hero-section">
+            <h1 class="hero-title">SOLITIUM</h1>
+            <p class="hero-subtitle">Personal Seismic Impact & Meteorological Intelligence for Indonesia</p>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
+                <a href="dashboard.html" class="btn btn-primary">Open Control Dashboard</a>
+                <a href="alerts.html" class="btn btn-secondary">Explore Recent Earthquakes</a>
+            </div>
+        </section>
+
+        <!-- CAPABILITIES & MODULES GRID -->
+        <section class="about-grid">
+            <article class="info-card">
+                <h2 class="card-title">Personal Proximity & MMI Engine</h2>
+                <p class="card-text">
+                    Calculates exact Haversine distance, compass bearing, estimated Modified Mercalli Intensity (MMI), and theoretical P &amp; S wave arrival times relative to your GPS or reference city across Indonesia.
+                </p>
+                <div style="margin-top: 16px;">
+                    <a href="dashboard.html" class="footer-btn">Launch Map Engine &rarr;</a>
+                </div>
+            </article>
+
+            <article class="info-card">
+                <h2 class="card-title">Live BMKG Feeds & Tectonic Faults</h2>
+                <p class="card-text">
+                    Direct integration with BMKG M 5.0+ and Felt earthquake feeds. Includes interactive vector overlays of major Indonesian fault lines, subduction trenches, and an interactive What-If earthquake simulator.
+                </p>
+                <div style="margin-top: 16px;">
+                    <a href="alerts.html" class="footer-btn">Browse Seismic Feeds &rarr;</a>
+                </div>
+            </article>
+
+            <article class="info-card">
+                <h2 class="card-title">Seismic History & Clustering</h2>
+                <p class="card-text">
+                    Persistent local sequence logger backed by IndexedDB and LocalStorage. Automatically detects aftershock sequences within 50 km and 48 hours, with CSV and JSON data export capabilities.
+                </p>
+                <div style="margin-top: 16px;">
+                    <a href="earthquakes.html" class="footer-btn">View Sequence Archives &rarr;</a>
+                </div>
+            </article>
+
+            <article class="info-card">
+                <h2 class="card-title">Weather & Commuter Advisories</h2>
+                <p class="card-text">
+                    High-resolution synoptic forecasts with 3-hour interval progression and automated commuter alerts (rain window risk detection, heat &amp; humidity index, and air quality telemetry).
+                </p>
+                <div style="margin-top: 16px;">
+                    <a href="weather.html" class="footer-btn">Check Regional Weather &rarr;</a>
+                </div>
+            </article>
+        </section>
+
+        <!-- ABOUT & DISCLAIMER SECTION -->
+        <section class="about-grid">
+            <article class="info-card">
+                <h2 class="card-title">How it works</h2>
+                <p class="card-text">
+                    <strong>Solitium</strong> integrates directly with the official BMKG API and open meteorological networks to deliver real-time seismic impact modeling and hyperlocal weather forecasts across the Indonesian archipelago.
+                </p>
+            </article>
+
+            <article class="info-card">
+                <h2 class="card-title">Academic Disclaimer</h2>
+                <p class="card-text">
+                    <strong>Solitium</strong> is developed solely as an educational student engineering project to practice geospatial data processing, attenuation modeling, and frontend API integration. It is not affiliated with, endorsed by, or intended to replace official BMKG early warning sirens. All data is provided strictly for educational and statistical purposes.
+                </p>
+            </article>
+        </section>
+
+    </main>
+    
+    <!-- SITE FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            
+            <div class="footer-left">
+                <span class="footer-brand">&copy; SOLITIUM</span>
+                <span class="footer-divider">|</span>
+                <p class="footer-author">
+                    Student project by <strong>FAYPixel</strong> 
+                    <span class="footer-divider">•</span> 
+                    <a href="https://idn.sch.id" target="_blank" rel="noopener" class="footer-link">IDN BS Solo</a>
+                </p>
+            </div>
+
+            <div class="footer-right">
+                <a href="#projects" class="footer-btn">
+                    <span>See my other projects</span>
+                    <i class="fa-solid fa-arrow-right icon-arrow"></i>
+                </a>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/geo-engine.js"></script>
+    <script src="js/bmkg-service.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
+    </a>
+            </div>
+
+        </div>
+    </footer>
+
+
+</body>
+</html>
